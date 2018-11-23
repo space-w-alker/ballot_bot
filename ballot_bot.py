@@ -5,9 +5,13 @@ import time
 import sys
 import re
 import copy
+import cli_text
 from httplib import BadStatusLine
 
-
+text = cli_text.Textify()
+print(text.print_string("__unilag"))
+print(text.print_string("__ballot"))
+print(text.print_string("___bot"))
 
 
 def go_to(br,exec_string):
@@ -38,6 +42,8 @@ def go_to(br,exec_string):
 class User(object):
 
     def __init__(self):
+        
+
         self.accom_string = "http://studentportal.unilag.edu.ng/(S(3b32hzf5m2rxptnxrb5ifonb))/AccommodationReservation.aspx?"
         self.hostel_list = ["hallid=ENI-NJOKU+HALL","hallid=PROFESSOR+SABURI+BIOBAKU+HALL","hallid=MARIERE+HALL","hallid=JAJA"]
         self.readable_hostel_list = ["ENI-NJOKU HALL", " BIOBAKU HALL", "MARIERE HALL", "JAJA HALL"]
@@ -107,6 +113,7 @@ class User(object):
         return br
 
 def run(br,hostel_string,usr,hostel_index):
+
     def check_status(br):
         if (re.search(".*?StudentLoginPage.aspx$",br.response().geturl())):
             print("Oops We were Logged out \n Let's try that again")
@@ -127,6 +134,7 @@ def run(br,hostel_string,usr,hostel_index):
         go_to(br,exec_string)
         if(check_status(br)):continue
         
+        refresh_string = br.response().geturl()
 
         br.select_form(nr=0)
         print("Attempting to reseerve at {0}".format(usr.readable_hostel_list[hostel_index]))
