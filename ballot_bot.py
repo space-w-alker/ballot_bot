@@ -10,7 +10,7 @@ from httplib import BadStatusLine
 
 text = cli_text.Textify()
 print(text.print_string("__unilag"))
-print(text.print_string("__ballot"))
+print(text.print_string("_ballot"))
 print(text.print_string("___bot"))
 
 
