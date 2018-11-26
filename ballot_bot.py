@@ -7,11 +7,9 @@ import re
 import copy
 import cli_text
 from httplib import BadStatusLine
+from PIL import Image
 
-text = cli_text.Textify()
-print(text.print_string("__unilag"))
-print(text.print_string("_ballot"))
-print(text.print_string("___bot"))
+
 
 
 def go_to(br,exec_string):
@@ -54,6 +52,7 @@ class User(object):
     def fetch_user_input(self):
         while(True):
             self.matric = raw_input("Enter Your Matric No::")#[:-1]
+            print("\n\n\n\nNote: Password will not be echoed\n")
             self.password = str(getpass.getpass("Enter your Portal Password::"))#[:-1]
             
             #print(len(self.matric))
@@ -112,7 +111,8 @@ class User(object):
         
         return br
 
-def run(br,hostel_string,usr,hostel_index):
+def run(hostel_string,usr,hostel_index):
+    br = usr.newLogin()
 
     def check_status(br):
         if (re.search(".*?StudentLoginPage.aspx$",br.response().geturl())):
@@ -149,11 +149,17 @@ def run(br,hostel_string,usr,hostel_index):
 #user.newLogin()
 
 if (__name__ == "__main__"):
+    text = cli_text.Textify()
+    print(text.print_pic(Image.open(".\\cli_icons\\unilag-logo-s.jpg")))
+    print(text.print_string("unilag"))
+    print(text.print_string("ballot"))
+    print(text.print_string("bot"))
+    
     user = User()
     index = 0
     for i in range(4):
         htl = user.selected_hostel[i % user.div]
-        t = threading.Thread(target=run, args=(user.newLogin(),htl,user, user.select_index))
+        t = threading.Thread(target=run, args=(htl,user, user.select_index))
         #t.daemon = True
         try:
             t.start()

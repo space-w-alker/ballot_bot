@@ -1,12 +1,12 @@
 from PIL import Image
-import pprint
+import sys
 
 class Textify():
     def __init__(self):
         self.letters = "abcdefghijklmnopqrstuvwxyz_"
         self.letters_dict = {}
         for x in self.letters:
-            self.letters_dict[x] = Image.open(".//cli_icons//{}.png".format(x))
+            self.letters_dict[x] = Image.open(".\\cli_icons\\{}.png".format(x))
     def parse_letter(self,letter):
         image = self.letters_dict.get(letter)
         return_string = ""
@@ -20,6 +20,20 @@ class Textify():
                 else:temp_list += " "
             return_list.append(temp_list)
         return return_list
+
+    def print_pic(self, pic):
+        return_string = ""
+        for y in range(pic.size[1]):
+            temp_string = ""
+            for x in range(pic.size[0]):
+                if pic.getpixel((x,y))[0] > 150 and pic.getpixel((x,y))[1] > 150 and pic.getpixel((x,y))[2] > 150:
+                    temp_string += " "
+                else:
+                    temp_string += "*"
+            temp_string += "\n"
+            return_string += temp_string
+        return return_string
+
     def print_string(self,string):
         total = []
         for letter in string:
